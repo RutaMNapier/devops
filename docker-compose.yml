@@ -13,3 +13,5 @@ services:
       MYSQL_DATABASE: employees
     ports:
       - "3306:3306"
+    volumes:
+      - ./test_db:/docker-entrypoint-initdb.d
