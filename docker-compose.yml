@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   db:
-    build: ./db
+    build:
+      context: .          # 👈 use the whole setMethods folder as context
+      dockerfile: db/Dockerfile
     container_name: db
     environment:
       MYSQL_ROOT_PASSWORD: example
@@ -11,7 +13,8 @@ services:
       - "3306:3306"
 
   app:
-    build: .
+    build:
+      context: .          # app Dockerfile already in root, fine
     container_name: app
     depends_on:
       - db
