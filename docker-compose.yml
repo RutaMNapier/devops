@@ -1,12 +1,23 @@
-version: '3'
+version: '3.8'
+
 services:
-  # Application Dockerfile is in same folder which is .
+  db:
+    build: ./db
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: employees
+    ports:
+      - "3306:3306"
+
   app:
     build: .
-
-  # db is is db folder
-  db:
-    build: db/.
-    restart: always
+    container_name: app
+    depends_on:
+      - db
+    environment:
+      DB_URL: jdbc:mysql://db:3306/employees?allowPublicKeyRetrieval=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: example
     ports:
-      - "33060:3306"
+      - "8080:8080"
